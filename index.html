@@ -1,66 +1,73 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Examen práctico único: HTML5, CSS y JavaScript. Formulario con validación, manipulación del DOM, eventos y Local Storage.">
-    <title>Examen Práctico Único - HTML5, CSS, JS</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>Examen Práctico Único</h1>
-        <nav>
-            <ul>
-                <li><a href="#formulario">Formulario</a></li>
-                <li><a href="#info">Información</a></li>
-            </ul>
-        </nav>
-    </header>
+// DOMContentLoaded para asegurar que el DOM está cargado
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('userForm');
+    const feedback = document.getElementById('feedback');
+    const saludo = document.getElementById('saludo');
+    const infoBtn = document.getElementById('infoBtn');
+    const userData = document.getElementById('userData');
 
-    <main>
-        <section id="formulario">
-            <h2>Registro de Usuario</h2>
-            <form id="userForm" autocomplete="off" novalidate>
-                <article>
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" required minlength="2" maxlength="30">
-                </article>
-                <article>
-                    <label for="email">Correo electrónico:</label>
-                    <input type="email" id="email" name="email" required>
-                </article>
-                <article>
-                    <label for="edad">Edad:</label>
-                    <input type="number" id="edad" name="edad" required min="18" max="100">
-                </article>
-                <article>
-                    <label for="pais">País:</label>
-                    <select id="pais" name="pais" required>
-                        <option value="">Selecciona tu país</option>
-                        <option value="mx">México</option>
-                        <option value="es">España</option>
-                        <option value="ar">Argentina</option>
-                        <option value="cl">Chile</option>
-                        <option value="co">Colombia</option>
-                    </select>
-                </article>
-                <button type="submit">Enviar</button>
-            </form>
-            <div id="feedback" aria-live="polite"></div>
-        </section>
+    // Al cargar, recuperar el nombre guardado en Local Storage (si existe)
+    const storedName = localStorage.getItem('nombreUsuario');
+    if (storedName) {
+        saludo.textContent = `¡Bienvenido de nuevo, ${storedName}!`;
+    } else {
+        saludo.textContent = 'Por favor, registra tus datos en el formulario.';
+    }
 
-        <section id="info">
-            <h2>Bienvenida</h2>
-            <article>
-                <p id="saludo"></p>
-            </article>
-        </section>
-    </main>
+    // Evento de envío del formulario
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    <footer>
-        <p>&copy; 2025 Examen Práctico Único – AngelAvila2025</p>
-    </footer>
-    <script src="/js/funciones.js"></script>
-</body>
-</html>
+        // Validación nativa
+        if (!form.checkValidity()) {
+            feedback.textContent = 'Por favor completa correctamente todos los campos requeridos.';
+            feedback.style.color = "#d90429";
+            form.reportValidity(); // Muestra mensajes nativos
+            return;
+        }
+
+        // Obtener valores
+        const nombre = document.getElementById('nombre').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const edad = document.getElementById('edad').value.trim();
+        const pais = document.getElementById('pais').value;
+
+        // Guardar datos en Local Storage
+        localStorage.setItem('nombreUsuario', nombre);
+        localStorage.setItem('emailUsuario', email);
+        localStorage.setItem('edadUsuario', edad);
+        localStorage.setItem('paisUsuario', pais);
+
+        // Feedback visual
+        feedback.textContent = '¡Datos guardados correctamente!';
+        feedback.style.color = "#38b000";
+        saludo.textContent = `¡Bienvenido, ${nombre}!`;
+
+        // Limpiar el formulario después de un breve retraso
+        setTimeout(() => {
+            form.reset();
+            feedback.textContent = '';
+        }, 2000);
+    });
+
+    // Evento para mostrar la información del usuario al hacer clic en el menú Información
+    infoBtn.addEventListener('click', function() {
+        // Recuperar datos de Local Storage
+        const nombre = localStorage.getItem('nombreUsuario') || '';
+        const email = localStorage.getItem('emailUsuario') || '';
+        const edad = localStorage.getItem('edadUsuario') || '';
+        const pais = localStorage.getItem('paisUsuario') || '';
+
+        if (nombre && email && edad && pais) {
+            // Mostrar datos en el div userData
+            userData.innerHTML = `
+                <strong>Nombre:</strong> ${nombre}<br>
+                <strong>Correo electrónico:</strong> ${email}<br>
+                <strong>Edad:</strong> ${edad}<br>
+                <strong>País:</strong> ${pais.toUpperCase()}
+            `;
+        } else {
+            userData.innerHTML = 'No hay datos registrados. Por favor, completa el formulario.';
+        }
+    });
+});
