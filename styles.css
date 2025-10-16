@@ -1,6 +1,6 @@
 :root {
     --color-principal: #078cda;
-    --color-secundario: #f2f2f2;
+    --color-secundario: #635c5c;
     --color-acento: #f77f00;
 }
 
@@ -36,10 +36,10 @@ nav a {
 main {
     max-width: 600px;
     margin: 2rem auto;
-    background: rgb(0, 0, 0);
+    background: rgb(37, 37, 37);
     border-radius: 8px;
     padding: 2rem;
-    box-shadow: 0 0 10px #ddd;
+    box-shadow: 0 0 10px #4d0b83;
 }
 
 section {
@@ -93,7 +93,7 @@ button[type="submit"]:hover {
 footer {
     text-align: center;
     padding: 1rem 0;
-    background: #222;
+    background: #6d45ff;
     color: #eee;
     margin-top: 2rem;
 }
