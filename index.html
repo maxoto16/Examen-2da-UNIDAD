@@ -1,73 +1,50 @@
-// DOMContentLoaded para asegurar que el DOM está cargado
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('userForm');
-    const feedback = document.getElementById('feedback');
-    const saludo = document.getElementById('saludo');
-    const infoBtn = document.getElementById('infoBtn');
-    const userData = document.getElementById('userData');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro de Asistencia Escolar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>📚 Registro de Asistencia Escolar</h1>
+    <nav>
+      <button id="panel-btn">Panel</button>
+      <button id="reporte-btn">Reportes</button>
+      <button id="estadisticas-btn">Estadísticas</button>
+    </nav>
+  </header>
 
-    // Al cargar, recuperar el nombre guardado en Local Storage (si existe)
-    const storedName = localStorage.getItem('nombreUsuario');
-    if (storedName) {
-        saludo.textContent = `¡Bienvenido de nuevo, ${storedName}!`;
-    } else {
-        saludo.textContent = 'Por favor, registra tus datos en el formulario.';
-    }
+  <main>
+    <section id="panel-section" class="active">
+      <h2>📝 Panel de Docente</h2>
+      <div id="grupo-form">
+        <input type="text" id="grupo-nombre" placeholder="Nombre del grupo">
+        <button onclick="crearGrupo()">Crear Grupo</button>
+      </div>
+      <div id="grupos-list"></div>
+      <div id="alumnos-panel"></div>
+    </section>
 
-    // Evento de envío del formulario
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
+    <section id="reporte-section">
+      <h2>🗂️ Reportes de Asistencia</h2>
+      <div>
+        <button onclick="descargarReporte('semanal')">Descargar reporte semanal PDF</button>
+        <button onclick="descargarReporte('mensual')">Descargar reporte mensual PDF</button>
+      </div>
+      <div id="reporte-vista"></div>
+    </section>
 
-        // Validación nativa
-        if (!form.checkValidity()) {
-            feedback.textContent = 'Por favor completa correctamente todos los campos requeridos.';
-            feedback.style.color = "#d90429";
-            form.reportValidity(); // Muestra mensajes nativos
-            return;
-        }
+    <section id="estadisticas-section">
+      <h2>📊 Estadísticas Visuales</h2>
+      <canvas id="estadisticas-canvas"></canvas>
+    </section>
+  </main>
 
-        // Obtener valores
-        const nombre = document.getElementById('nombre').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const edad = document.getElementById('edad').value.trim();
-        const pais = document.getElementById('pais').value;
-
-        // Guardar datos en Local Storage
-        localStorage.setItem('nombreUsuario', nombre);
-        localStorage.setItem('emailUsuario', email);
-        localStorage.setItem('edadUsuario', edad);
-        localStorage.setItem('paisUsuario', pais);
-
-        // Feedback visual
-        feedback.textContent = '¡Datos guardados correctamente!';
-        feedback.style.color = "#38b000";
-        saludo.textContent = `¡Bienvenido, ${nombre}!`;
-
-        // Limpiar el formulario después de un breve retraso
-        setTimeout(() => {
-            form.reset();
-            feedback.textContent = '';
-        }, 2000);
-    });
-
-    // Evento para mostrar la información del usuario al hacer clic en el menú Información
-    infoBtn.addEventListener('click', function() {
-        // Recuperar datos de Local Storage
-        const nombre = localStorage.getItem('nombreUsuario') || '';
-        const email = localStorage.getItem('emailUsuario') || '';
-        const edad = localStorage.getItem('edadUsuario') || '';
-        const pais = localStorage.getItem('paisUsuario') || '';
-
-        if (nombre && email && edad && pais) {
-            // Mostrar datos en el div userData
-            userData.innerHTML = `
-                <strong>Nombre:</strong> ${nombre}<br>
-                <strong>Correo electrónico:</strong> ${email}<br>
-                <strong>Edad:</strong> ${edad}<br>
-                <strong>País:</strong> ${pais.toUpperCase()}
-            `;
-        } else {
-            userData.innerHTML = 'No hay datos registrados. Por favor, completa el formulario.';
-        }
-    });
-});
+  <footer>
+    <p>Creado por maxoto16 &copy; 2025</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
