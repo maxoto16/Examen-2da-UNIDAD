@@ -1,5 +1,5 @@
 :root {
-    --color-principal: #2a6f97;
+    --color-principal: #078cda;
     --color-secundario: #f2f2f2;
     --color-acento: #f77f00;
 }
@@ -8,12 +8,12 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: var(--color-secundario);
-    color: #222;
+    color: #ffffff;
 }
 
 header {
     background: var(--color-principal);
-    color: white;
+    color: rgb(32, 70, 177);
     padding: 1rem 0;
     text-align: center;
 }
@@ -28,7 +28,7 @@ nav ul {
 }
 
 nav a {
-    color: white;
+    color: rgba(177, 172, 172, 0.534);
     text-decoration: none;
     font-weight: bold;
 }
@@ -36,7 +36,7 @@ nav a {
 main {
     max-width: 600px;
     margin: 2rem auto;
-    background: white;
+    background: rgb(0, 0, 0);
     border-radius: 8px;
     padding: 2rem;
     box-shadow: 0 0 10px #ddd;
